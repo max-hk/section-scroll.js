@@ -1,4 +1,4 @@
-export default sectionScroll = (sectionList, onLoad, onLeave) => {
+export default (sectionList, onLoad, onLeave) => {
     let previousScrollY = window.scrollY;
     let targetSection;
 
