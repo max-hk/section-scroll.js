@@ -1,22 +1,19 @@
-export default (sectionList, onLoad, onLeave) => {
+export default (sectionList, options) => {
     let previousScrollY = window.scrollY;
-    let targetSection;
+    let previousSection;
 
-    const scrollHandler = () => {
-        const getCurrentSection = () => {
-            let currentSection;
-            for (let element of sectionList) {
-                if (element.getBoundingClientRect().top < window.innerHeight) {
-                    currentSection = element;
-                }
+    const getCurrentSection = () => {
+        let currentSection;
+        for (let element of sectionList) {
+            if (element.getBoundingClientRect().top < window.innerHeight) {
+                currentSection = element;
             }
-            return currentSection;
-        };
-
-        // Page reload
-        if (window.scrollY === previousScrollY) return;
+        }
+        return currentSection;
+    };
+    const scrollHandler = () => {
         // Scrolling down
-        else if (window.scrollY > previousScrollY) {
+        if (window.scrollY > previousScrollY) {
             let nextSection = getCurrentSection();
             // If next section exists and user scroll through topmost pixel of next section
             if (nextSection && nextSection.getBoundingClientRect().top > 0) {
@@ -37,25 +34,29 @@ export default (sectionList, onLoad, onLeave) => {
     const scrollToSection = (sectionToScroll) => {
         // Scroll behaviour can only prevented by CSS "overflow: hidden" but not event.preventDefault()
         document.body.style.overflowY = 'hidden';
-        onLeave();
-
-        targetSection = sectionToScroll;
-        window.scroll({ top: targetSection.offsetTop, behavior: 'smooth' });
+        if (options.onLeave) options.onLeave(previousSection);
         window.removeEventListener('scroll', scrollHandler);
+        window.scroll({ top: sectionToScroll.offsetTop, behavior: 'smooth' });
 
         // Wait for scroll finish
         let resetOverflow = setInterval(() => {
             /* If window reach target section 
                getBoundingClientRect().top may be float number so we need to floor() it 
                trunc() is not the suitable function to use as it will clear the interval too early (before the scroll actually finish) while scrolling up */
-            if (Math.floor(targetSection.getBoundingClientRect().top) === 0) { // To do: && navbarBottom === 0
+            if (Math.floor(sectionToScroll.getBoundingClientRect().top) === 0) { // To do: && navbarBottom === 0
                 document.body.style.overflowY = '';
                 clearInterval(resetOverflow);
                 window.addEventListener('scroll', scrollHandler);
-                onLoad();
+                if (options.afterLeave) options.afterLeave(previousSection);
+                if (options.onLoad) options.onLoad(sectionToScroll);
+
+                previousSection = sectionToScroll;
             }
         }, 10);
     };
 
+    // Initialize sectionScroll
     window.addEventListener('scroll', scrollHandler);
+    previousSection = getCurrentSection();
+    options.onLoad(previousSection);
 }
