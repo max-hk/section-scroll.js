@@ -1,0 +1,30 @@
+{
+  "name": "section-scroll.js",
+  "version": "0.0.1",
+  "description": "Lightweight one page section scroll in vanilla JS",
+  "scripts": {
+    "build": "npx terser src/section-scroll.js --compress --mangle --source-map \"base='./src',includeSources,url='section-scroll.min.js.map'\" --output dist/section-scroll.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxloh/section-scroll.js.git"
+  },
+  "keywords": [
+    "fullpage",
+    "mousewheel",
+    "onepage",
+    "scroll",
+    "scrolling",
+    "section-scroll",
+    "sections"
+  ],
+  "author": "mousewheel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maxloh/section-scroll.js/issues"
+  },
+  "homepage": "https://github.com/maxloh/section-scroll.js#readme",
+  "devDependencies": {
+    "terser": "^4.1.2"
+  }
+}
