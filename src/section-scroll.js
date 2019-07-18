@@ -15,8 +15,7 @@ export default (sectionList, options) => {
         window.removeEventListener('scroll', scrollHandler);
         window.scroll({ top: sectionToScroll.offsetTop, behavior: 'smooth' });
 
-        if (options.onLoadStart) options.onLoadStart(sectionToScroll, previousSection);
-        if (options.onLeaveStart) options.onLeaveStart(previousSection, sectionToScroll);
+        if (options.before) options.before(sectionToScroll, previousSection);
 
         // Wait for scroll finish
         const resetOverflow = setInterval(() => {
@@ -28,9 +27,7 @@ export default (sectionList, options) => {
                 document.body.style.overflowY = '';
                 window.addEventListener('scroll', scrollHandler);
 
-                if (options.onLoadEnd) options.onLoadEnd(sectionToScroll, previousSection);
-                if (options.onLeaveEnd) options.onLeaveEnd(previousSection, sectionToScroll);
-
+                if (options.after) options.after(sectionToScroll, previousSection);
                 previousSection = sectionToScroll;
             }
         }, 10);
@@ -58,7 +55,7 @@ export default (sectionList, options) => {
 
     // Initialize sectionScroll
     window.addEventListener('scroll', scrollHandler);
-    if (options.onLoadStart) options.onLoadStart(getCurrentSection(), getCurrentSection());
-    if (options.onLoadEnd) options.onLoadEnd(getCurrentSection(), getCurrentSection());
+    if (options.before) options.before(getCurrentSection(), getCurrentSection());
+    if (options.after) options.after(getCurrentSection(), getCurrentSection());
     previousSection = getCurrentSection();
 }
