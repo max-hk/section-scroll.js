@@ -8,14 +8,26 @@
     <script type="module">
         import sectionScroll from '../src/section-scroll.js';
         addEventListener('DOMContentLoaded', () => {
-            sectionScroll(
-                document.getElementById('container').getElementsByTagName('section'),
-                {
-                    onLoad: (section) => { section.classList.remove('before-animation'); },
-                    onLeave: (section) => { section.classList.add('before-animation'); }
+            let sectionList = document.getElementById('container').getElementsByTagName('section');
+            for (let section of sectionList) {
+                section.dataset.backgroundColor = getComputedStyle(section).backgroundColor;
+            }
+            sectionScroll(sectionList, {
+                onLoadStart: (sectionToScroll) => {
+                    sectionToScroll.style.backgroundColor = '';
+                    if (sectionToScroll.nextElementSibling)
+                        sectionToScroll.nextElementSibling.style.backgroundColor = sectionToScroll.dataset.backgroundColor;
+                    if (sectionToScroll.previousElementSibling)
+                        sectionToScroll.previousElementSibling.style.backgroundColor = sectionToScroll.dataset.backgroundColor;
+                },
+                onLoadEnd: (sectionToScroll) => {
+                    sectionToScroll.classList.remove('before-animation');
+                },
+                onLeaveStart: (previousSection) => {
+                    previousSection.classList.add('before-animation');
                 }
-            );
-        })
+            });
+        });
     </script>
 
     <!--Must-have styles-->
@@ -39,6 +51,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: 400ms cubic-bezier(0, 0, 0.2, 1);
         }
 
         section>h1 {
@@ -96,13 +109,13 @@
 
         section#a.before-animation>h1,
         section#c.before-animation>h1 {
-            transform: translateX(-30vw);
+            transform: translateX(-20vw);
             opacity: 0;
         }
 
         section#b.before-animation>h1,
         section#d.before-animation>h1 {
-            transform: translateX(30vw);
+            transform: translateX(20vw);
             opacity: 0;
         }
     </style>

@@ -12,9 +12,11 @@ export default (sectionList, options) => {
     const scrollToSection = (sectionToScroll) => {
         // Scroll behaviour can only prevented by CSS "overflow: hidden" but not event.preventDefault()
         document.body.style.overflowY = 'hidden';
-        if (options.onLeave) options.onLeave(previousSection);
         window.removeEventListener('scroll', scrollHandler);
         window.scroll({ top: sectionToScroll.offsetTop, behavior: 'smooth' });
+
+        if (options.onLoadStart) options.onLoadStart(sectionToScroll, previousSection);
+        if (options.onLeaveStart) options.onLeaveStart(previousSection, sectionToScroll);
 
         // Wait for scroll finish
         const resetOverflow = setInterval(() => {
@@ -22,11 +24,12 @@ export default (sectionList, options) => {
                getBoundingClientRect().top may be float number so we need to floor() it 
                trunc() is not the suitable function to use as it will clear the interval too early (before the scroll actually finish) while scrolling up */
             if (Math.floor(sectionToScroll.getBoundingClientRect().top) === 0) { // To do: && navbarBottom === 0
-                document.body.style.overflowY = '';
                 clearInterval(resetOverflow);
+                document.body.style.overflowY = '';
                 window.addEventListener('scroll', scrollHandler);
-                if (options.afterLeave) options.afterLeave(previousSection);
-                if (options.onLoad) options.onLoad(sectionToScroll);
+
+                if (options.onLoadEnd) options.onLoadEnd(sectionToScroll, previousSection);
+                if (options.onLeaveEnd) options.onLeaveEnd(previousSection, sectionToScroll);
 
                 previousSection = sectionToScroll;
             }
@@ -55,6 +58,7 @@ export default (sectionList, options) => {
 
     // Initialize sectionScroll
     window.addEventListener('scroll', scrollHandler);
+    if (options.onLoadStart) options.onLoadStart(getCurrentSection(), getCurrentSection());
+    if (options.onLoadEnd) options.onLoadEnd(getCurrentSection(), getCurrentSection());
     previousSection = getCurrentSection();
-    options.onLoad(previousSection);
 }
