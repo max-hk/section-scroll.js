@@ -1,3 +1,8 @@
+/*!
+  * section-scroll.js 0.0.2 (https://github.com/maxloh/section-scroll.js)
+  * Copyright (c) 2019 Loh Ka Hong (https://github.com/maxloh)
+  * Licensed under MIT (https://github.com/maxloh/section-scroll.js/blob/master/LICENSE)
+  */
 export default (sectionList, options) => {
     let previousScrollY = window.scrollY;
     let previousSection;
