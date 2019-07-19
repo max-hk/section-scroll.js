@@ -16,8 +16,8 @@
                 before: (origin, destination) => {
                     origin.classList.add('before-animation');
                     destination.style.backgroundColor = '';
-                    if (destination.nextElementSibling) sectionToScroll.nextElementSibling.style.backgroundColor = sectionToScroll.dataset.backgroundColor;
-                    if (destination.previousElementSibling) sectionToScroll.previousElementSibling.style.backgroundColor = sectionToScroll.dataset.backgroundColor;
+                    if (destination.nextElementSibling) destination.nextElementSibling.style.backgroundColor = destination.dataset.backgroundColor;
+                    if (destination.previousElementSibling) destination.previousElementSibling.style.backgroundColor = destination.dataset.backgroundColor;
                 },
                 after: (origin, destination) => {
                     destination.classList.remove('before-animation');
