@@ -13,14 +13,14 @@
                 section.dataset.backgroundColor = getComputedStyle(section).backgroundColor;
             }
             sectionScroll(sectionList, {
-                before: (sectionToScroll, previousSection) => {
-                    sectionToScroll.style.backgroundColor = '';
-                    if (sectionToScroll.nextElementSibling) sectionToScroll.nextElementSibling.style.backgroundColor = sectionToScroll.dataset.backgroundColor;
-                    if (sectionToScroll.previousElementSibling) sectionToScroll.previousElementSibling.style.backgroundColor = sectionToScroll.dataset.backgroundColor;
-                    previousSection.classList.add('before-animation');
+                before: (origin, destination) => {
+                    origin.classList.add('before-animation');
+                    destination.style.backgroundColor = '';
+                    if (destination.nextElementSibling) sectionToScroll.nextElementSibling.style.backgroundColor = sectionToScroll.dataset.backgroundColor;
+                    if (destination.previousElementSibling) sectionToScroll.previousElementSibling.style.backgroundColor = sectionToScroll.dataset.backgroundColor;
                 },
-                after: (sectionToScroll) => {
-                    sectionToScroll.classList.remove('before-animation');
+                after: (origin, destination) => {
+                    destination.classList.remove('before-animation');
                 }
             });
         });
