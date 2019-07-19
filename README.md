@@ -74,7 +74,7 @@ let options = {
 }
 ```
 
-| Option                                    | Description                                                                                                                                             |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `before( origin:Node, destination:Node )` | Function to call before scrolling started and on page load<br/>On page load, both `origin` and `destination` would be the section window located        |
-| `after( origin:Node, destination:Node )`  | Function to call right after scrolling completed and on page load<br/>On page load, both `origin` and `destination` would be the section window located |
+| Option                                                  | Description                                                                                                                                             |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `before( origin:HTMLElement, destination:HTMLElement )` | Function to call before scrolling started and on page load<br/>On page load, both `origin` and `destination` would be the section window located        |
+| `after( origin:HTMLElement, destination:HTMLElement )`  | Function to call right after scrolling completed and on page load<br/>On page load, both `origin` and `destination` would be the section window located |
