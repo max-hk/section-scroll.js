@@ -26,8 +26,8 @@ Download [section-scroll.min.js](dist/section-scroll.min.js) and [section-scroll
 
 - For any JavaScript file using `sectionScroll`, add `type="module"` to their script tag
   
-  ```HTML
-    <script type="module" src="app.js"></script>
+  ```html
+  <script type="module" src="app.js"></script>
   ```
 
 - All sections should be placed inside a wrapper element, which should only contain section elements
@@ -45,23 +45,36 @@ Download [section-scroll.min.js](dist/section-scroll.min.js) and [section-scroll
 
 - Import `sectionScroll`
   
-  ```JavaScript
+  ```javascript
   import sectionScroll from 'relative/path/to/section-scroll.min.js';
   ```
 
 - Initialize `sectionScroll` after `DOMContentLoaded` event fired
   
-  ```JavaScript
+  ```javascript
   addEventListener('DOMContentLoaded', () => {
-      sectionScroll(document.getElementsByTagName('section'));
+      sectionScroll(document.getElementsByTagName('section'), options);
   });
   ```
 
-## Options
+## API
 
-`section-scroll.js` currently support two options
+**`section-scroll.js` is still a beta project. Expect behavior to change in the future**
 
-| Option                                  | Description                                                                                                                                     |
-| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `before(origin:Node, destination:Node)` | Function to call before scrolling started and on page load<br/>On page load, both `origin` and `destination` will be the section window located |
-| `after(origin:Node, destination:Node)`  | Function to call right after scrolling completed                                                                                                |
+```javascript
+sectionScroll( sectionList:NodeList|HTMLCollection [, options:object ] );
+```
+
+### Options
+
+```javascript
+let options = {
+    before: (origin, destination) => { ... },
+    after: (origin, destination) => { ... }
+}
+```
+
+| Option                                    | Description                                                                                                                                             |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `before( origin:Node, destination:Node )` | Function to call before scrolling started and on page load<br/>On page load, both `origin` and `destination` would be the section window located        |
+| `after( origin:Node, destination:Node )`  | Function to call right after scrolling completed and on page load<br/>On page load, both `origin` and `destination` would be the section window located |
