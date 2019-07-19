@@ -1,11 +1,12 @@
-/*!
-  * section-scroll.js 0.0.2 (https://github.com/maxloh/section-scroll.js)
-  * Copyright (c) 2019 Loh Ka Hong (https://github.com/maxloh)
-  * Licensed under MIT (https://github.com/maxloh/section-scroll.js/blob/master/LICENSE)
-  */
+/**
+ * @license
+ * section-scroll.js 0.0.2 (https://github.com/maxloh/section-scroll.js)
+ * Copyright (c) 2019 Loh Ka Hong (https://github.com/maxloh)
+ * Licensed under MIT (https://github.com/maxloh/section-scroll.js/blob/master/LICENSE)
+ */
 export default (sectionList, options) => {
     let previousScrollY = window.scrollY;
-    let previousSection;
+    let previousDestination;
 
     const getCurrentSection = () => {
         for (let element of sectionList) {
@@ -14,26 +15,26 @@ export default (sectionList, options) => {
             }
         }
     };
-    const scrollToSection = (sectionToScroll) => {
+    const scrollToSection = (destination) => {
         // Scroll behaviour can only prevented by CSS "overflow: hidden" but not event.preventDefault()
         document.body.style.overflowY = 'hidden';
         window.removeEventListener('scroll', scrollHandler);
-        window.scroll({ top: sectionToScroll.offsetTop, behavior: 'smooth' });
+        window.scroll({ top: destination.offsetTop, behavior: 'smooth' });
 
-        if (options.before) options.before(sectionToScroll, previousSection);
+        if (options.before) options.before(previousDestination, destination);
 
         // Wait for scroll finish
         const resetOverflow = setInterval(() => {
             /* If window reach target section 
                getBoundingClientRect().top may be float number so we need to floor() it 
                trunc() is not the suitable function to use as it will clear the interval too early (before the scroll actually finish) while scrolling up */
-            if (Math.floor(sectionToScroll.getBoundingClientRect().top) === 0) { // To do: && navbarBottom === 0
+            if (Math.floor(destination.getBoundingClientRect().top) === 0) { // To do: && navbarBottom === 0
                 clearInterval(resetOverflow);
                 document.body.style.overflowY = '';
                 window.addEventListener('scroll', scrollHandler);
 
-                if (options.after) options.after(sectionToScroll, previousSection);
-                previousSection = sectionToScroll;
+                if (options.after) options.after(previousDestination, destination);
+                previousDestination = destination;
             }
         }, 10);
     };
@@ -62,5 +63,5 @@ export default (sectionList, options) => {
     window.addEventListener('scroll', scrollHandler);
     if (options.before) options.before(getCurrentSection(), getCurrentSection());
     if (options.after) options.after(getCurrentSection(), getCurrentSection());
-    previousSection = getCurrentSection();
+    previousDestination = getCurrentSection();
 }
