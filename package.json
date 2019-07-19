@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Lightweight one page section scroll in vanilla JS",
   "scripts": {
-    "build": "npx terser src/section-scroll.js --compress --mangle --source-map \"base='./src',includeSources,url='section-scroll.min.js.map'\" --output dist/section-scroll.min.js"
+    "build": "npx terser src/section-scroll.js --output dist/section-scroll.min.js --compress --mangle --comments \"/@license.*/\" --source-map \"base='./src',includeSources,url='section-scroll.min.js.map'\" && cp --force dist/* docs"
   },
   "repository": {
     "type": "git",
