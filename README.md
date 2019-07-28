@@ -1,6 +1,6 @@
 # section-scroll.js
 
-Lightweight one page section scroll plugin in vanilla JS
+Lightweight desktop-only one page section scroll plugin in vanilla JS
 
 ## Demo
 
@@ -39,6 +39,20 @@ Download [section-scroll.min.js](dist/section-scroll.min.js) and [section-scroll
       <section>Section C</section>
       <section>Section D</section>
   </div>
+  ```
+
+### CSS
+
+- Must-have styles
+  
+  ```css
+  body {
+      margin: 0;
+  }
+  
+  section {
+      height: 100vh;
+  }
   ```
 
 ### JavaScript
