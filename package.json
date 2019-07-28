@@ -1,7 +1,8 @@
 {
   "name": "section-scroll.js",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Lightweight desktop-only one page section scroll plugin in vanilla JS",
+  "main": "dist/section-scroll.min.js",
   "scripts": {
     "build": "npx terser src/section-scroll.js --output dist/section-scroll.min.js --compress --mangle --comments \"/@license.*/\" --source-map \"base='./src',includeSources,url='section-scroll.min.js.map'\" && cp --force dist/* docs"
   },

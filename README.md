@@ -12,11 +12,11 @@ There are two ways to install `section-scroll.js`
 
 ### Download from GitHub
 
-Download [section-scroll.min.js](dist/section-scroll.min.js) and [section-scroll.min.js.map](dist/section-scroll.min.js.map) (optional), place them into your project
+Download [section-scroll.min.js](dist/section-scroll.min.js) and [section-scroll.min.js.map](dist/section-scroll.min.js.map) (optional), place them into project folder
 
 ### NPM
 
-- Run `npm install section-scroll.js` in your project folder
+- Run `npm install section-scroll.js` in project folder
 
 - Package `sectionScroll` and your scripts with JavaScript bundler like webpack
 
@@ -60,7 +60,11 @@ Download [section-scroll.min.js](dist/section-scroll.min.js) and [section-scroll
 - Import `sectionScroll`
   
   ```javascript
+  // Download from GitHub
   import sectionScroll from 'relative/path/to/section-scroll.min.js';
+  
+  // NPM
+  import sectionScroll from 'section-scroll.js';
   ```
 
 - Initialize `sectionScroll` after `DOMContentLoaded` event fired
